@@ -1,0 +1,1255 @@
+Terminals unused in grammar
+
+   ERROR
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: declaration-list
+
+    2 declaration-list: declaration-list declaration
+    3                 | declaration
+
+    4 declaration: var-declaration
+    5            | fun-declaration
+
+    6 var-declaration: type-specifier ID
+    7                | type-specifier ID T_COL_ESQ NUM T_COL_DIR
+
+    8 type-specifier: T_INT
+    9               | T_VOID
+
+   10 fun-declaration: type-specifier ID T_PAR_ESQ params T_PAR_DIR compound-stmt
+
+   11 params: param-list
+   12       | T_VOID
+
+   13 param-list: param-list T_COMMA param
+   14           | param
+
+   15 param: type-specifier ID
+   16      | type-specifier ID T_COL_ESQ T_COL_DIR
+
+   17 compound-stmt: T_CHV_ESQ local-declarations statement-list T_CHV_DIR
+
+   18 local-declarations: local-declarations var-declaration
+   19                   | var-declaration
+
+   20 statement-list: statement-list statement
+   21               | statement
+
+   22 statement: expression-stmt
+   23          | matched-stmt
+   24          | open-stmt
+   25          | iteration-stmt
+   26          | return-stmt
+
+   27 expression-stmt: expression T_SEMICOLLON
+   28                | T_SEMICOLLON
+
+   29 matched-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR matched-stmt T_ELSE matched-stmt
+   30             | compound-stmt
+
+   31 open-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR statement
+   32          | T_IF T_PAR_ESQ expression T_PAR_DIR matched-stmt T_ELSE open-stmt
+
+   33 iteration-stmt: T_WHILE T_PAR_ESQ expression T_PAR_DIR statement
+
+   34 return-stmt: T_RETURN T_SEMICOLLON
+   35            | T_RETURN expression T_SEMICOLLON
+
+   36 expression: var T_ATRIB expression
+   37           | simple-expression
+
+   38 var: ID
+   39    | ID T_COL_ESQ expression T_COL_DIR
+
+   40 simple-expression: additive-expression relop additive-expression
+   41                  | additive-expression
+
+   42 relop: T_LTEQ
+   43      | T_LT
+   44      | T_GT
+   45      | T_GTEQ
+   46      | T_EQ
+   47      | T_DIFF
+
+   48 additive-expression: additive-expression addop term
+   49                    | term
+
+   50 addop: OP_PLUS
+   51      | OP_MINUS
+
+   52 term: term mulop factor
+   53     | factor
+
+   54 mulop: OP_MULT
+   55      | OP_DIV
+
+   56 factor: T_PAR_ESQ expression T_PAR_DIR
+   57       | var
+   58       | call
+   59       | NUM
+
+   60 call: ID T_PAR_ESQ args T_PAR_DIR
+
+   61 args: arg-list
+   62     | %empty
+
+   63 arg-list: arg-list T_COMMA expression
+   64         | expression
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+NUM (258) 7 59
+T_ELSE (259) 29 32
+T_IF (260) 29 31 32
+T_INT (261) 8
+T_RETURN (262) 34 35
+T_VOID (263) 9 12
+T_WHILE (264) 33
+ID (265) 6 7 10 15 16 38 39 60
+T_DIFF (266) 47
+T_ATRIB (267) 36
+T_EQ (268) 46
+T_LTEQ (269) 42
+T_GTEQ (270) 45
+T_LT (271) 43
+T_GT (272) 44
+T_COMMA (273) 13 63
+T_SEMICOLLON (274) 27 28 34 35
+T_PAR_ESQ (275) 10 29 31 32 33 56 60
+T_PAR_DIR (276) 10 29 31 32 33 56 60
+T_CHV_ESQ (277) 17
+T_CHV_DIR (278) 17
+T_COL_ESQ (279) 7 16 39
+T_COL_DIR (280) 7 16 39
+OP_PLUS (281) 50
+OP_MINUS (282) 51
+OP_MULT (283) 54
+OP_DIV (284) 55
+ERROR (285)
+
+
+Nonterminals, with rules where they appear
+
+$accept (31)
+    on left: 0
+program (32)
+    on left: 1, on right: 0
+declaration-list (33)
+    on left: 2 3, on right: 1 2
+declaration (34)
+    on left: 4 5, on right: 2 3
+var-declaration (35)
+    on left: 6 7, on right: 4 18 19
+type-specifier (36)
+    on left: 8 9, on right: 6 7 10 15 16
+fun-declaration (37)
+    on left: 10, on right: 5
+params (38)
+    on left: 11 12, on right: 10
+param-list (39)
+    on left: 13 14, on right: 11 13
+param (40)
+    on left: 15 16, on right: 13 14
+compound-stmt (41)
+    on left: 17, on right: 10 30
+local-declarations (42)
+    on left: 18 19, on right: 17 18
+statement-list (43)
+    on left: 20 21, on right: 17 20
+statement (44)
+    on left: 22 23 24 25 26, on right: 20 21 31 33
+expression-stmt (45)
+    on left: 27 28, on right: 22
+matched-stmt (46)
+    on left: 29 30, on right: 23 29 32
+open-stmt (47)
+    on left: 31 32, on right: 24 32
+iteration-stmt (48)
+    on left: 33, on right: 25
+return-stmt (49)
+    on left: 34 35, on right: 26
+expression (50)
+    on left: 36 37, on right: 27 29 31 32 33 35 36 39 56 63 64
+var (51)
+    on left: 38 39, on right: 36 57
+simple-expression (52)
+    on left: 40 41, on right: 37
+relop (53)
+    on left: 42 43 44 45 46 47, on right: 40
+additive-expression (54)
+    on left: 48 49, on right: 40 41 48
+addop (55)
+    on left: 50 51, on right: 48
+term (56)
+    on left: 52 53, on right: 48 49 52
+mulop (57)
+    on left: 54 55, on right: 52
+factor (58)
+    on left: 56 57 58 59, on right: 52 53
+call (59)
+    on left: 60, on right: 58
+args (60)
+    on left: 61 62, on right: 60
+arg-list (61)
+    on left: 63 64, on right: 61 63
+
+
+State 0
+
+    0 $accept: . program $end
+
+    T_INT   shift, and go to state 1
+    T_VOID  shift, and go to state 2
+
+    program           go to state 3
+    declaration-list  go to state 4
+    declaration       go to state 5
+    var-declaration   go to state 6
+    type-specifier    go to state 7
+    fun-declaration   go to state 8
+
+
+State 1
+
+    8 type-specifier: T_INT .
+
+    $default  reduce using rule 8 (type-specifier)
+
+
+State 2
+
+    9 type-specifier: T_VOID .
+
+    $default  reduce using rule 9 (type-specifier)
+
+
+State 3
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 9
+
+
+State 4
+
+    1 program: declaration-list .
+    2 declaration-list: declaration-list . declaration
+
+    T_INT   shift, and go to state 1
+    T_VOID  shift, and go to state 2
+
+    $default  reduce using rule 1 (program)
+
+    declaration      go to state 10
+    var-declaration  go to state 6
+    type-specifier   go to state 7
+    fun-declaration  go to state 8
+
+
+State 5
+
+    3 declaration-list: declaration .
+
+    $default  reduce using rule 3 (declaration-list)
+
+
+State 6
+
+    4 declaration: var-declaration .
+
+    $default  reduce using rule 4 (declaration)
+
+
+State 7
+
+    6 var-declaration: type-specifier . ID
+    7                | type-specifier . ID T_COL_ESQ NUM T_COL_DIR
+   10 fun-declaration: type-specifier . ID T_PAR_ESQ params T_PAR_DIR compound-stmt
+
+    ID  shift, and go to state 11
+
+
+State 8
+
+    5 declaration: fun-declaration .
+
+    $default  reduce using rule 5 (declaration)
+
+
+State 9
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 10
+
+    2 declaration-list: declaration-list declaration .
+
+    $default  reduce using rule 2 (declaration-list)
+
+
+State 11
+
+    6 var-declaration: type-specifier ID .
+    7                | type-specifier ID . T_COL_ESQ NUM T_COL_DIR
+   10 fun-declaration: type-specifier ID . T_PAR_ESQ params T_PAR_DIR compound-stmt
+
+    T_PAR_ESQ  shift, and go to state 12
+    T_COL_ESQ  shift, and go to state 13
+
+    $default  reduce using rule 6 (var-declaration)
+
+
+State 12
+
+   10 fun-declaration: type-specifier ID T_PAR_ESQ . params T_PAR_DIR compound-stmt
+
+    T_INT   shift, and go to state 1
+    T_VOID  shift, and go to state 14
+
+    type-specifier  go to state 15
+    params          go to state 16
+    param-list      go to state 17
+    param           go to state 18
+
+
+State 13
+
+    7 var-declaration: type-specifier ID T_COL_ESQ . NUM T_COL_DIR
+
+    NUM  shift, and go to state 19
+
+
+State 14
+
+    9 type-specifier: T_VOID .
+   12 params: T_VOID .
+
+    T_PAR_DIR  reduce using rule 12 (params)
+    $default   reduce using rule 9 (type-specifier)
+
+
+State 15
+
+   15 param: type-specifier . ID
+   16      | type-specifier . ID T_COL_ESQ T_COL_DIR
+
+    ID  shift, and go to state 20
+
+
+State 16
+
+   10 fun-declaration: type-specifier ID T_PAR_ESQ params . T_PAR_DIR compound-stmt
+
+    T_PAR_DIR  shift, and go to state 21
+
+
+State 17
+
+   11 params: param-list .
+   13 param-list: param-list . T_COMMA param
+
+    T_COMMA  shift, and go to state 22
+
+    $default  reduce using rule 11 (params)
+
+
+State 18
+
+   14 param-list: param .
+
+    $default  reduce using rule 14 (param-list)
+
+
+State 19
+
+    7 var-declaration: type-specifier ID T_COL_ESQ NUM . T_COL_DIR
+
+    T_COL_DIR  shift, and go to state 23
+
+
+State 20
+
+   15 param: type-specifier ID .
+   16      | type-specifier ID . T_COL_ESQ T_COL_DIR
+
+    T_COL_ESQ  shift, and go to state 24
+
+    $default  reduce using rule 15 (param)
+
+
+State 21
+
+   10 fun-declaration: type-specifier ID T_PAR_ESQ params T_PAR_DIR . compound-stmt
+
+    T_CHV_ESQ  shift, and go to state 25
+
+    compound-stmt  go to state 26
+
+
+State 22
+
+   13 param-list: param-list T_COMMA . param
+
+    T_INT   shift, and go to state 1
+    T_VOID  shift, and go to state 2
+
+    type-specifier  go to state 15
+    param           go to state 27
+
+
+State 23
+
+    7 var-declaration: type-specifier ID T_COL_ESQ NUM T_COL_DIR .
+
+    $default  reduce using rule 7 (var-declaration)
+
+
+State 24
+
+   16 param: type-specifier ID T_COL_ESQ . T_COL_DIR
+
+    T_COL_DIR  shift, and go to state 28
+
+
+State 25
+
+   17 compound-stmt: T_CHV_ESQ . local-declarations statement-list T_CHV_DIR
+
+    T_INT   shift, and go to state 1
+    T_VOID  shift, and go to state 2
+
+    var-declaration     go to state 29
+    type-specifier      go to state 30
+    local-declarations  go to state 31
+
+
+State 26
+
+   10 fun-declaration: type-specifier ID T_PAR_ESQ params T_PAR_DIR compound-stmt .
+
+    $default  reduce using rule 10 (fun-declaration)
+
+
+State 27
+
+   13 param-list: param-list T_COMMA param .
+
+    $default  reduce using rule 13 (param-list)
+
+
+State 28
+
+   16 param: type-specifier ID T_COL_ESQ T_COL_DIR .
+
+    $default  reduce using rule 16 (param)
+
+
+State 29
+
+   19 local-declarations: var-declaration .
+
+    $default  reduce using rule 19 (local-declarations)
+
+
+State 30
+
+    6 var-declaration: type-specifier . ID
+    7                | type-specifier . ID T_COL_ESQ NUM T_COL_DIR
+
+    ID  shift, and go to state 32
+
+
+State 31
+
+   17 compound-stmt: T_CHV_ESQ local-declarations . statement-list T_CHV_DIR
+   18 local-declarations: local-declarations . var-declaration
+
+    NUM           shift, and go to state 33
+    T_IF          shift, and go to state 34
+    T_INT         shift, and go to state 1
+    T_RETURN      shift, and go to state 35
+    T_VOID        shift, and go to state 2
+    T_WHILE       shift, and go to state 36
+    ID            shift, and go to state 37
+    T_SEMICOLLON  shift, and go to state 38
+    T_PAR_ESQ     shift, and go to state 39
+    T_CHV_ESQ     shift, and go to state 25
+
+    var-declaration      go to state 40
+    type-specifier       go to state 30
+    compound-stmt        go to state 41
+    statement-list       go to state 42
+    statement            go to state 43
+    expression-stmt      go to state 44
+    matched-stmt         go to state 45
+    open-stmt            go to state 46
+    iteration-stmt       go to state 47
+    return-stmt          go to state 48
+    expression           go to state 49
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 32
+
+    6 var-declaration: type-specifier ID .
+    7                | type-specifier ID . T_COL_ESQ NUM T_COL_DIR
+
+    T_COL_ESQ  shift, and go to state 13
+
+    $default  reduce using rule 6 (var-declaration)
+
+
+State 33
+
+   59 factor: NUM .
+
+    $default  reduce using rule 59 (factor)
+
+
+State 34
+
+   29 matched-stmt: T_IF . T_PAR_ESQ expression T_PAR_DIR matched-stmt T_ELSE matched-stmt
+   31 open-stmt: T_IF . T_PAR_ESQ expression T_PAR_DIR statement
+   32          | T_IF . T_PAR_ESQ expression T_PAR_DIR matched-stmt T_ELSE open-stmt
+
+    T_PAR_ESQ  shift, and go to state 56
+
+
+State 35
+
+   34 return-stmt: T_RETURN . T_SEMICOLLON
+   35            | T_RETURN . expression T_SEMICOLLON
+
+    NUM           shift, and go to state 33
+    ID            shift, and go to state 37
+    T_SEMICOLLON  shift, and go to state 57
+    T_PAR_ESQ     shift, and go to state 39
+
+    expression           go to state 58
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 36
+
+   33 iteration-stmt: T_WHILE . T_PAR_ESQ expression T_PAR_DIR statement
+
+    T_PAR_ESQ  shift, and go to state 59
+
+
+State 37
+
+   38 var: ID .
+   39    | ID . T_COL_ESQ expression T_COL_DIR
+   60 call: ID . T_PAR_ESQ args T_PAR_DIR
+
+    T_PAR_ESQ  shift, and go to state 60
+    T_COL_ESQ  shift, and go to state 61
+
+    $default  reduce using rule 38 (var)
+
+
+State 38
+
+   28 expression-stmt: T_SEMICOLLON .
+
+    $default  reduce using rule 28 (expression-stmt)
+
+
+State 39
+
+   56 factor: T_PAR_ESQ . expression T_PAR_DIR
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    expression           go to state 62
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 40
+
+   18 local-declarations: local-declarations var-declaration .
+
+    $default  reduce using rule 18 (local-declarations)
+
+
+State 41
+
+   30 matched-stmt: compound-stmt .
+
+    $default  reduce using rule 30 (matched-stmt)
+
+
+State 42
+
+   17 compound-stmt: T_CHV_ESQ local-declarations statement-list . T_CHV_DIR
+   20 statement-list: statement-list . statement
+
+    NUM           shift, and go to state 33
+    T_IF          shift, and go to state 34
+    T_RETURN      shift, and go to state 35
+    T_WHILE       shift, and go to state 36
+    ID            shift, and go to state 37
+    T_SEMICOLLON  shift, and go to state 38
+    T_PAR_ESQ     shift, and go to state 39
+    T_CHV_ESQ     shift, and go to state 25
+    T_CHV_DIR     shift, and go to state 63
+
+    compound-stmt        go to state 41
+    statement            go to state 64
+    expression-stmt      go to state 44
+    matched-stmt         go to state 45
+    open-stmt            go to state 46
+    iteration-stmt       go to state 47
+    return-stmt          go to state 48
+    expression           go to state 49
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 43
+
+   21 statement-list: statement .
+
+    $default  reduce using rule 21 (statement-list)
+
+
+State 44
+
+   22 statement: expression-stmt .
+
+    $default  reduce using rule 22 (statement)
+
+
+State 45
+
+   23 statement: matched-stmt .
+
+    $default  reduce using rule 23 (statement)
+
+
+State 46
+
+   24 statement: open-stmt .
+
+    $default  reduce using rule 24 (statement)
+
+
+State 47
+
+   25 statement: iteration-stmt .
+
+    $default  reduce using rule 25 (statement)
+
+
+State 48
+
+   26 statement: return-stmt .
+
+    $default  reduce using rule 26 (statement)
+
+
+State 49
+
+   27 expression-stmt: expression . T_SEMICOLLON
+
+    T_SEMICOLLON  shift, and go to state 65
+
+
+State 50
+
+   36 expression: var . T_ATRIB expression
+   57 factor: var .
+
+    T_ATRIB  shift, and go to state 66
+
+    $default  reduce using rule 57 (factor)
+
+
+State 51
+
+   37 expression: simple-expression .
+
+    $default  reduce using rule 37 (expression)
+
+
+State 52
+
+   40 simple-expression: additive-expression . relop additive-expression
+   41                  | additive-expression .
+   48 additive-expression: additive-expression . addop term
+
+    T_DIFF    shift, and go to state 67
+    T_EQ      shift, and go to state 68
+    T_LTEQ    shift, and go to state 69
+    T_GTEQ    shift, and go to state 70
+    T_LT      shift, and go to state 71
+    T_GT      shift, and go to state 72
+    OP_PLUS   shift, and go to state 73
+    OP_MINUS  shift, and go to state 74
+
+    $default  reduce using rule 41 (simple-expression)
+
+    relop  go to state 75
+    addop  go to state 76
+
+
+State 53
+
+   49 additive-expression: term .
+   52 term: term . mulop factor
+
+    OP_MULT  shift, and go to state 77
+    OP_DIV   shift, and go to state 78
+
+    $default  reduce using rule 49 (additive-expression)
+
+    mulop  go to state 79
+
+
+State 54
+
+   53 term: factor .
+
+    $default  reduce using rule 53 (term)
+
+
+State 55
+
+   58 factor: call .
+
+    $default  reduce using rule 58 (factor)
+
+
+State 56
+
+   29 matched-stmt: T_IF T_PAR_ESQ . expression T_PAR_DIR matched-stmt T_ELSE matched-stmt
+   31 open-stmt: T_IF T_PAR_ESQ . expression T_PAR_DIR statement
+   32          | T_IF T_PAR_ESQ . expression T_PAR_DIR matched-stmt T_ELSE open-stmt
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    expression           go to state 80
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 57
+
+   34 return-stmt: T_RETURN T_SEMICOLLON .
+
+    $default  reduce using rule 34 (return-stmt)
+
+
+State 58
+
+   35 return-stmt: T_RETURN expression . T_SEMICOLLON
+
+    T_SEMICOLLON  shift, and go to state 81
+
+
+State 59
+
+   33 iteration-stmt: T_WHILE T_PAR_ESQ . expression T_PAR_DIR statement
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    expression           go to state 82
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 60
+
+   60 call: ID T_PAR_ESQ . args T_PAR_DIR
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    $default  reduce using rule 62 (args)
+
+    expression           go to state 83
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+    args                 go to state 84
+    arg-list             go to state 85
+
+
+State 61
+
+   39 var: ID T_COL_ESQ . expression T_COL_DIR
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    expression           go to state 86
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 62
+
+   56 factor: T_PAR_ESQ expression . T_PAR_DIR
+
+    T_PAR_DIR  shift, and go to state 87
+
+
+State 63
+
+   17 compound-stmt: T_CHV_ESQ local-declarations statement-list T_CHV_DIR .
+
+    $default  reduce using rule 17 (compound-stmt)
+
+
+State 64
+
+   20 statement-list: statement-list statement .
+
+    $default  reduce using rule 20 (statement-list)
+
+
+State 65
+
+   27 expression-stmt: expression T_SEMICOLLON .
+
+    $default  reduce using rule 27 (expression-stmt)
+
+
+State 66
+
+   36 expression: var T_ATRIB . expression
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    expression           go to state 88
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 67
+
+   47 relop: T_DIFF .
+
+    $default  reduce using rule 47 (relop)
+
+
+State 68
+
+   46 relop: T_EQ .
+
+    $default  reduce using rule 46 (relop)
+
+
+State 69
+
+   42 relop: T_LTEQ .
+
+    $default  reduce using rule 42 (relop)
+
+
+State 70
+
+   45 relop: T_GTEQ .
+
+    $default  reduce using rule 45 (relop)
+
+
+State 71
+
+   43 relop: T_LT .
+
+    $default  reduce using rule 43 (relop)
+
+
+State 72
+
+   44 relop: T_GT .
+
+    $default  reduce using rule 44 (relop)
+
+
+State 73
+
+   50 addop: OP_PLUS .
+
+    $default  reduce using rule 50 (addop)
+
+
+State 74
+
+   51 addop: OP_MINUS .
+
+    $default  reduce using rule 51 (addop)
+
+
+State 75
+
+   40 simple-expression: additive-expression relop . additive-expression
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    var                  go to state 89
+    additive-expression  go to state 90
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 76
+
+   48 additive-expression: additive-expression addop . term
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    var     go to state 89
+    term    go to state 91
+    factor  go to state 54
+    call    go to state 55
+
+
+State 77
+
+   54 mulop: OP_MULT .
+
+    $default  reduce using rule 54 (mulop)
+
+
+State 78
+
+   55 mulop: OP_DIV .
+
+    $default  reduce using rule 55 (mulop)
+
+
+State 79
+
+   52 term: term mulop . factor
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    var     go to state 89
+    factor  go to state 92
+    call    go to state 55
+
+
+State 80
+
+   29 matched-stmt: T_IF T_PAR_ESQ expression . T_PAR_DIR matched-stmt T_ELSE matched-stmt
+   31 open-stmt: T_IF T_PAR_ESQ expression . T_PAR_DIR statement
+   32          | T_IF T_PAR_ESQ expression . T_PAR_DIR matched-stmt T_ELSE open-stmt
+
+    T_PAR_DIR  shift, and go to state 93
+
+
+State 81
+
+   35 return-stmt: T_RETURN expression T_SEMICOLLON .
+
+    $default  reduce using rule 35 (return-stmt)
+
+
+State 82
+
+   33 iteration-stmt: T_WHILE T_PAR_ESQ expression . T_PAR_DIR statement
+
+    T_PAR_DIR  shift, and go to state 94
+
+
+State 83
+
+   64 arg-list: expression .
+
+    $default  reduce using rule 64 (arg-list)
+
+
+State 84
+
+   60 call: ID T_PAR_ESQ args . T_PAR_DIR
+
+    T_PAR_DIR  shift, and go to state 95
+
+
+State 85
+
+   61 args: arg-list .
+   63 arg-list: arg-list . T_COMMA expression
+
+    T_COMMA  shift, and go to state 96
+
+    $default  reduce using rule 61 (args)
+
+
+State 86
+
+   39 var: ID T_COL_ESQ expression . T_COL_DIR
+
+    T_COL_DIR  shift, and go to state 97
+
+
+State 87
+
+   56 factor: T_PAR_ESQ expression T_PAR_DIR .
+
+    $default  reduce using rule 56 (factor)
+
+
+State 88
+
+   36 expression: var T_ATRIB expression .
+
+    $default  reduce using rule 36 (expression)
+
+
+State 89
+
+   57 factor: var .
+
+    $default  reduce using rule 57 (factor)
+
+
+State 90
+
+   40 simple-expression: additive-expression relop additive-expression .
+   48 additive-expression: additive-expression . addop term
+
+    OP_PLUS   shift, and go to state 73
+    OP_MINUS  shift, and go to state 74
+
+    $default  reduce using rule 40 (simple-expression)
+
+    addop  go to state 76
+
+
+State 91
+
+   48 additive-expression: additive-expression addop term .
+   52 term: term . mulop factor
+
+    OP_MULT  shift, and go to state 77
+    OP_DIV   shift, and go to state 78
+
+    $default  reduce using rule 48 (additive-expression)
+
+    mulop  go to state 79
+
+
+State 92
+
+   52 term: term mulop factor .
+
+    $default  reduce using rule 52 (term)
+
+
+State 93
+
+   29 matched-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR . matched-stmt T_ELSE matched-stmt
+   31 open-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR . statement
+   32          | T_IF T_PAR_ESQ expression T_PAR_DIR . matched-stmt T_ELSE open-stmt
+
+    NUM           shift, and go to state 33
+    T_IF          shift, and go to state 34
+    T_RETURN      shift, and go to state 35
+    T_WHILE       shift, and go to state 36
+    ID            shift, and go to state 37
+    T_SEMICOLLON  shift, and go to state 38
+    T_PAR_ESQ     shift, and go to state 39
+    T_CHV_ESQ     shift, and go to state 25
+
+    compound-stmt        go to state 41
+    statement            go to state 98
+    expression-stmt      go to state 44
+    matched-stmt         go to state 99
+    open-stmt            go to state 46
+    iteration-stmt       go to state 47
+    return-stmt          go to state 48
+    expression           go to state 49
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 94
+
+   33 iteration-stmt: T_WHILE T_PAR_ESQ expression T_PAR_DIR . statement
+
+    NUM           shift, and go to state 33
+    T_IF          shift, and go to state 34
+    T_RETURN      shift, and go to state 35
+    T_WHILE       shift, and go to state 36
+    ID            shift, and go to state 37
+    T_SEMICOLLON  shift, and go to state 38
+    T_PAR_ESQ     shift, and go to state 39
+    T_CHV_ESQ     shift, and go to state 25
+
+    compound-stmt        go to state 41
+    statement            go to state 100
+    expression-stmt      go to state 44
+    matched-stmt         go to state 45
+    open-stmt            go to state 46
+    iteration-stmt       go to state 47
+    return-stmt          go to state 48
+    expression           go to state 49
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 95
+
+   60 call: ID T_PAR_ESQ args T_PAR_DIR .
+
+    $default  reduce using rule 60 (call)
+
+
+State 96
+
+   63 arg-list: arg-list T_COMMA . expression
+
+    NUM        shift, and go to state 33
+    ID         shift, and go to state 37
+    T_PAR_ESQ  shift, and go to state 39
+
+    expression           go to state 101
+    var                  go to state 50
+    simple-expression    go to state 51
+    additive-expression  go to state 52
+    term                 go to state 53
+    factor               go to state 54
+    call                 go to state 55
+
+
+State 97
+
+   39 var: ID T_COL_ESQ expression T_COL_DIR .
+
+    $default  reduce using rule 39 (var)
+
+
+State 98
+
+   31 open-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR statement .
+
+    $default  reduce using rule 31 (open-stmt)
+
+
+State 99
+
+   23 statement: matched-stmt .
+   29 matched-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR matched-stmt . T_ELSE matched-stmt
+   32 open-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR matched-stmt . T_ELSE open-stmt
+
+    T_ELSE  shift, and go to state 102
+
+    $default  reduce using rule 23 (statement)
+
+
+State 100
+
+   33 iteration-stmt: T_WHILE T_PAR_ESQ expression T_PAR_DIR statement .
+
+    $default  reduce using rule 33 (iteration-stmt)
+
+
+State 101
+
+   63 arg-list: arg-list T_COMMA expression .
+
+    $default  reduce using rule 63 (arg-list)
+
+
+State 102
+
+   29 matched-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR matched-stmt T_ELSE . matched-stmt
+   32 open-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR matched-stmt T_ELSE . open-stmt
+
+    T_IF       shift, and go to state 34
+    T_CHV_ESQ  shift, and go to state 25
+
+    compound-stmt  go to state 41
+    matched-stmt   go to state 103
+    open-stmt      go to state 104
+
+
+State 103
+
+   29 matched-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR matched-stmt T_ELSE matched-stmt .
+
+    $default  reduce using rule 29 (matched-stmt)
+
+
+State 104
+
+   32 open-stmt: T_IF T_PAR_ESQ expression T_PAR_DIR matched-stmt T_ELSE open-stmt .
+
+    $default  reduce using rule 32 (open-stmt)
